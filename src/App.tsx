@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Counter } from './features/counter/Counter';
 import './App.css';
 import { Routes } from './util/routes';
 import { BrowserRouter as Router } from 'react-router-dom';
