@@ -21,6 +21,14 @@ export const CartScreen: React.FC<CartScreenProps> = () => {
     const deleteCart = (id: any) => {
         dispatch(removeFromCart(id));
     }
+
+    const getCartCount = () => {
+        return cartItems.reduce((qty: any, item: any) => Number(item.qty) + qty, 0)
+    }
+
+    const getCartTotalPrice = () => {
+        return cartItems.reduce((price: any, item: any) => Number(item.price * item.qty) + price, 0)
+    }
     return (
         <div className="cartscreen">
             <div className="cartscreen__left">
@@ -32,14 +40,14 @@ export const CartScreen: React.FC<CartScreenProps> = () => {
                     </div>
                 ) : (
                     cartItems.map((item: any) => (
-                        <CartItem item={item} qtyChangeHandler={qtyChangeHandler} deleteCart={deleteCart} />
+                        <CartItem key={item.product} item={item} qtyChangeHandler={qtyChangeHandler} deleteCart={deleteCart} />
                     ))
                 )}
             </div>
             <div className="cartscreen__right">
                 <div className="cartscreen__info">
-                    <p>Subtotal (0) items</p>
-                    <p>$499</p>
+                    <p>Subtotal ({getCartCount()}) items</p>
+                    <p>$({getCartTotalPrice()})</p>
                 </div>
                 <div>
                     <button>Checkout</button>

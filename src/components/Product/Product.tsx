@@ -24,10 +24,10 @@ export const Product: React.FC<ProductProps> = ({ imageUrl, name, price, descrip
                     {description.substring(0, 100)}....
                 </p>
 
-                <p className="info__price">$ {price}</p>
+                <p className="info__price">${price}</p>
 
                 <Link to={`/product/${productId}`} className="info__button">
-                    View {productId}
+                    View
                 </Link>
             </div>
         </div>
