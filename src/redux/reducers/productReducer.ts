@@ -31,26 +31,26 @@ export const getProductsReducer = (state = { products: [] } as any, action: any)
 /**
  * View product
  */
-export const getproductDetailsReducer = (state = { products: {} } as any, action: any) => {
+export const getProductDetailsReducer = (state = { products: {} } as any, action: any) => {
     switch (action.type) {
         case actionTypes.GET_PRODUCT_DETAILS_REQUEST:
             return {
                 loading: true,
-            }
+            };
         case actionTypes.GET_PRODUCT_DETAILS_SUCCESS:
             return {
                 loading: false,
-                product: action.payload
-            }
+                productItem: action.payload, //this is what we will get later on; setting it as a variable name
+            };
         case actionTypes.GET_PRODUCT_DETAILS_FAIL:
             return {
                 loading: false,
-                error: action.payload
-            }
+                error: action.payload,
+            };
         case actionTypes.GET_PRODUCT_DETAILS_RESET:
             return {
-                product: {}
-            }
+                productItem: {},
+            };
         default:
             return state;
     }

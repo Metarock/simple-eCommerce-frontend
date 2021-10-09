@@ -1,48 +1,99 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './ProductScreen.css'
-interface ProductScreenProps {
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
+import { getProductDetails } from '../../redux/actions/productActions'
+import { addToCart } from '../../redux/actions/cartAction';
+import axios from 'axios';
+import { RouteComponentProps, useParams } from 'react-router'
+import { parse } from 'querystring';
+import { Product } from '../../components';
 
-}
 
-export const ProductScreen: React.FC<ProductScreenProps> = ({ }) => {
+export const ProductScreen: React.FC<RouteComponentProps> = ({ history, match }: any) => {
+
+    const dispatch = useDispatch();
+    const { id }: any = useParams();
+    const idParse = parse(id)
+    // axios.get(process.env.REACT_APP_API_URL.concat(`/api/products/${match.params.id}`)).then((json) => {
+    //     console.log('yes ,', json);
+    // }).catch((err) => {
+    //     console.log('err', err)
+    // });
+
+    const [qty, setQty] = useState(1);
+
+
+    const productDetails = useSelector((state: RootStateOrAny) => state.getProductDetails)
+
+    const { loading, error, productItem } = productDetails;
+
+    console.log('product ', productItem);
+    console.log('match ', idParse);
+    useEffect(() => {
+        if (!productItem) {
+            dispatch(getProductDetails(match.params.id))
+        }
+        else if (productItem && (match.params as any).id !== productItem?._id) {
+            console.log('not cool')
+            dispatch(getProductDetails(match.params.id))
+        }
+    }, [dispatch, match, productItem]);
+
+
+    const addToCartHandler = () => {
+        dispatch(addToCart(productItem?._id, qty));
+        history.push(`/cart`);
+    };
     return (
         <div className="productscreen">
-            <div className="productscreen__left">
-                <div className="left__image">
-                    <img
-                        src={"https://images.unsplash.com/photo-1606813907291-d86efa9b94db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"}
-                        alt="product name"
-                    />
-                </div>
+            {loading ? (
+                <h2>Loading...</h2>
+            ) : error ? (
+                <h2>{error}</h2>
+            ) : (
+                <>
+                    <div className="productscreen__left">
+                        <div className="left__image">
+                            <img
+                                src={productItem?.imageUrl}
+                                alt="product name"
+                            />
+                        </div>
 
-                <div className="left__info">
-                    <p className="left__name">Product</p>
-                    <p>Price: $499 </p>
-                    <p>Description: Lorem ipsum dolor sit amet</p>
-                </div>
-            </div>
-            <div className="productscreen_right">
-                <div className="right__info">
-                    <p>
-                        Price: <span>$499</span>
-                    </p>
-                    <p>
-                        Status: <span>In stock</span>
-                    </p>
-                    <p>
-                        Qty:
-                        <select>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </p>
-                    <p>
-                        <button type="button">Add to cart</button>
-                    </p>
-                </div>
-            </div>
+                        <div className="left__info">
+                            <p className="left__name">{productItem?.name}</p>
+                            <p>Price: $ {productItem?.price}</p>
+                            <p>Description: {productItem?.description}</p>
+                        </div>
+                    </div>
+                    <div className="productscreen_right">
+                        <div className="right__info">
+                            <p>
+                                Price: <span>$ {productItem?.price}</span>
+                            </p>
+                            <p>
+                                Status:
+                                <span>
+                                    {productItem?.countInStock > 0 ? "In stock" : "Out of stock"}
+                                </span>
+                            </p>
+                            <p>
+                                Qty:
+                                <select value={qty} onChange={(e) => setQty(parseInt(e.target.value))}>
+                                    {[...Array(productItem?.countInStock).keys() as any].map((x) => (
+                                        <option key={x + 1} value={x + 1}>
+                                            {x + 1}
+                                        </option>
+                                    ))}
+                                </select>
+                            </p>
+                            <p>
+                                <button type="button" onClick={addToCartHandler}>Add to cart</button>
+                            </p>
+                        </div>
+                    </div>
+                </>
+            )}
         </div >
     );
 }

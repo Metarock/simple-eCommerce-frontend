@@ -23,12 +23,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = () => {
             <h2 className="homescrreen__title">Latest Products</h2>
             <div className="homescreen__products">
                 {/* render the Product component here */}
-                <Product />
-                <Product />
-                <Product />
-                <Product />
-                <Product />
-                <Product />
+                {loading ? <h2>Loading...</h2> : error ? <h2>{error}</h2> : products.map((product: any) => (
+                    <Product
+                        key={product._id}
+                        productId={product._id}
+                        {...product} />
+                ))}
             </div>
         </div>
     );

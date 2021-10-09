@@ -10,7 +10,7 @@ import axios from 'axios';
  * @returns 
  */
 export const addToCart = (id: any, qty: any) => async (dispatch: any, getState: any) => {
-    const { data }: any = await axios.get(`/api/products/${id}`);
+    const { data }: any = await axios.get(process.env.REACT_APP_API_URL.concat(`/api/products/${id}`));
 
     //this is basically saying get the data from the backend with the variable
     //and then save the payload
@@ -27,7 +27,7 @@ export const addToCart = (id: any, qty: any) => async (dispatch: any, getState: 
     })
 
     //getState is a redux thunk
-    localStorage.setItem('cart', JSON.stringify(getState.cart.cartItems))
+    localStorage.setItem('cart', JSON.stringify(getState().cart.cartItems))
 }
 
 /**

@@ -1,33 +1,36 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './CartItem.css';
 interface CartItemProps {
-
+    item: any,
+    qtyChangeHandler: any,
+    deleteCart: any
 }
 
-export const CartItem: React.FC<CartItemProps> = ({ }) => {
+export const CartItem: React.FC<CartItemProps> = ({ item, qtyChangeHandler, deleteCart }) => {
     return (
         <div className="cartitem">
             <div className="cartitem__image">
                 <img
-                    src={"https://images.unsplash.com/photo-1606813907291-d86efa9b94db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"}
-                    alt="product name"
+                    src={item?.imageUrl}
+                    alt={item?.name}
                 />
             </div>
 
-            <Link to={`/product/${1}`} className="cartitem__name">
-                <p>Product 1</p>
+            <Link to={`/product/${item?.product}`} className="cartitem__name">
+                <p>{item?.name}</p>
             </Link>
 
-            <p className="cartitem__price">$499.99</p>
-            <select className="cartitem__select">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+            <p className="cartitem__price">$ {item?.price}</p>
+            <select className="cartitem__select" value={item?.qty} onChange={(e) => qtyChangeHandler(item.product, e.target.value)}>
+                {[...Array(item?.countInStock).keys() as any].map((x) => (
+                    <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                    </option>
+                ))}
             </select>
 
-            <button className="cartitem__deleteBtn">
+            <button className="cartitem__deleteBtn" onClick={() => deleteCart(item.product)}>
                 <i className="fas fa-trash"></i>
             </button>
         </div>
