@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import './ProductScreen.css'
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
-import { getProductDetails } from '../../redux/actions/productActions'
-import { addToCart } from '../../redux/actions/cartAction';
-import axios from 'axios';
-import { RouteComponentProps, useParams } from 'react-router'
 import { parse } from 'querystring';
-import { Product } from '../../components';
+import React, { useEffect, useState } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps, useParams } from 'react-router';
+import { addToCart } from '../../redux/actions/cartAction';
+import { getProductDetails } from '../../redux/actions/productActions';
+import './ProductScreen.css';
 
 
 export const ProductScreen: React.FC<RouteComponentProps> = ({ history, match }: any) => {

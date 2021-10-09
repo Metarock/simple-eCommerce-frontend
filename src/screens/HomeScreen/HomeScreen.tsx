@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Product } from '../../components';
-import './HomeScreen.css'
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { getProducts as listProducts } from '../../redux/actions/productActions';
+import './HomeScreen.css';
 interface HomeScreenProps {
 
 }

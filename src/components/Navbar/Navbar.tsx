@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css'
+import './Navbar.css';
 
 interface NavbarProps {
     click: React.MouseEventHandler<HTMLDivElement>

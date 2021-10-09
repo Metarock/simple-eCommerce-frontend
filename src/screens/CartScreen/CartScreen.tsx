@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import './CartScreen.css'
-import { CartItem } from '../../components';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import React from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { CartItem } from '../../components';
 import { addToCart, removeFromCart } from '../../redux/actions/cartAction';
+import './CartScreen.css';
 interface CartScreenProps {
 
 }
 
-export const CartScreen: React.FC<CartScreenProps> = ({ }) => {
+export const CartScreen: React.FC<CartScreenProps> = () => {
     const dispatch = useDispatch();
 
     const cart = useSelector((state: RootStateOrAny) => state.cart);

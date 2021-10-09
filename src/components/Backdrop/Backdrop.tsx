@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import './Backdrop.css'
+import React from 'react';
+import './Backdrop.css';
 interface BackdropProps {
     show: boolean,
     click: React.MouseEventHandler<HTMLDivElement>

@@ -1,7 +1,6 @@
-import { ObjectId } from 'mongoose';
-import React, { useState } from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
-import './Product.css'
+import './Product.css';
 interface ProductProps {
     imageUrl: string,
     name: string,
